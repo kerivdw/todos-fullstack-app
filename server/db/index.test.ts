@@ -5,6 +5,7 @@ const config = require('./knexfile')
 const testConnection = require('knex')(config[environment])
 
 import { beforeEach } from 'node:test'
+import { getTaskListIdByUser } from '.'
 
 const {
   getAllTasksByUser,
@@ -35,6 +36,11 @@ describe('Tasks', () => {
       expect(tasks[0].completedAt).toBeNull()
       expect(tasks[0].taskListId).toBe(1)
     })
+  })
+
+  it('should return the list id for a user', async () => {
+    const [{ id }] = await getTaskListIdByUser(1)
+    expect(id).toBe(1)
   })
 
   it('should create a new task on a list', async () => {

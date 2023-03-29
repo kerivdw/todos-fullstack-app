@@ -17,6 +17,10 @@ export function getAllTasksByUser(authId = 1, db = connection): Task[] {
     )
 }
 
+export function getTaskListIdByUser(auth = 1, db = connection) {
+  return db('task_list').where({ user_id: auth }).select('id')
+}
+
 export function createTask(newTask: NewTask, db = connection): number {
   return db('tasks')
     .insert({
