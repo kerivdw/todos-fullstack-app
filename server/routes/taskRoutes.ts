@@ -1,11 +1,7 @@
 import express from 'express'
-import { Task, NewTask, UpdatedTask} from '../../models/Task'
+import { Task, NewTask, UpdatedTask } from '../../models/Task'
 
 import { getAllTasksByUser, createTask, updateTask, deleteTask } from '../db'
-
-//Temporarily setting the api's to one user
-//Will allow more users in future functionality
-const currentUser = 1
 
 const router = express.Router()
 
@@ -14,6 +10,8 @@ router.use(express.json())
 //GET /api/v1/task/list
 router.get('/list', async (_, res) => {
   try {
+    //hard coded for mvp
+    const currentUser = 1
     const taskArr: Task[] = await getAllTasksByUser(currentUser)
     res.json({ tasks: taskArr })
   } catch (error) {
@@ -95,11 +93,10 @@ router.post('/update', async (req, res) => {
         description: updatedTask.description,
         createdAt: createdAt,
         completedAt: updatedTask.completedAt,
-        taskListId: taskListId
+        taskListId: taskListId,
       },
     })
   } catch (error) {
-
     res.status(500).json({
       error: 'There was an error creating the task',
     })
@@ -110,18 +107,19 @@ router.post('/update', async (req, res) => {
 router.post('/delete', async (req, res) => {
   try {
     console.log(req.body)
-    const [{id}] = req.body
+    const [{ id }] = req.body
+    console.log(id)
     if (!id) {
       res.status(400).send('The task id is missing')
       return
     }
-    await deleteTask(id)
+    const stuff = await deleteTask(id)
+    console.log(stuff)
     res.sendStatus(200)
-
   } catch (error) {
     console.log(error)
     res.status(500).json({
-      error: 'There was an error creating the task',
+      error: 'There was an error deleting the task',
     })
   }
 })
