@@ -1,6 +1,12 @@
 export default interface Task {
   id: number
   description: string
-  created_at: Date
-  completed_at: Date
+  createdAt: Date
+  completedAt: Date
+  taskListId: number
+}
+
+export default interface TaskList {
+  id: number
+  Tasks: Task[]
 }
