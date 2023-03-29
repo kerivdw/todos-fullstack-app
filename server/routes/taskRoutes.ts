@@ -113,11 +113,19 @@ router.post('/delete', async (req, res) => {
       res.status(400).send('The task id is missing')
       return
     }
-    const stuff = await deleteTask(id)
-    console.log(stuff)
-    res.sendStatus(200)
+    const recordsUpdated = await deleteTask(id)
+    if(recordsUpdated === 1) {
+      res.sendStatus(204)
+    }
+    if(recordsUpdated === 0) {
+      res.status(503).send('the task record does not exist')
+    }
+    if(recordsUpdated > 1) {
+      res.status(500).send('more than one record was deleted in error')
+    }
   } catch (error) {
     console.log(error)
+
     res.status(500).json({
       error: 'There was an error deleting the task',
     })
