@@ -1,7 +1,7 @@
 export interface NewTask {
   description: string
-  createdAt: Date
-  completedAt: Date
+  createdAt: string
+  completedAt: string
   taskListId: number
 }
 
@@ -10,6 +10,8 @@ export interface Task extends NewTask {
 }
 
 export interface UpdatedTask extends Partial<Task> {
+  description?: string
+  completedAt?: string
   createdAt?: never
   taskListId?: never
 }
