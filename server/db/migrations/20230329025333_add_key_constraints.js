@@ -2,7 +2,7 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.seed = async function (knex) {
+exports.up = async function (knex) {
   await knex.schema
     .alterTable('tasks', (table) => {
       table.foreign('tasks.task_list_id').references('task_list_id')

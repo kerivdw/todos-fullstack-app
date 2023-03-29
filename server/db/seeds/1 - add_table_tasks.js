@@ -41,7 +41,7 @@ exports.seed = async function (knex) {
   await knex('task_list').insert([
     {
       id: 1,
-      user_id: null,
+      user_id: 1,
     },
   ])
 }
