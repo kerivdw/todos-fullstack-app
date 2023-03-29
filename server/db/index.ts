@@ -4,7 +4,10 @@ const connection = require('knex')(config[environment])
 
 import { Task, NewTask, UpdatedTask } from '../../models/Task'
 
-export function getAllTasksByUser(authId = 1, db = connection): Promise<Task[]> {
+export function getAllTasksByUser(
+  authId = 1,
+  db = connection
+): Promise<Task[]> {
   return db('tasks')
     .join('task_list', 'task_list.id', 'tasks.task_list_id')
     .where({ 'task_list.user_id': authId })
@@ -17,19 +20,20 @@ export function getAllTasksByUser(authId = 1, db = connection): Promise<Task[]> 
     )
 }
 
-export function getTaskListIdByUser(auth = 1, db = connection): Promise<number> {
+export function getTaskListIdByUser(auth = 1, db = connection) {
   return db('task_list').where({ user_id: auth }).select('id')
 }
 
-export function createTask(newTask: NewTask, db = connection): Promise<number> {
-  return db('tasks')
-    .insert({
-      description: newTask.description,
-      created_at: newTask.createdAt,
-      completed_at: newTask.completedAt,
-      task_list_id: newTask.taskListId,
-    })
-    .returning('id')
+export function createTask(
+  newTask: NewTask,
+  db = connection
+): Promise<number[]> {
+  return db('tasks').insert({
+    description: newTask.description,
+    created_at: newTask.createdAt,
+    completed_at: newTask.completedAt,
+    task_list_id: newTask.taskListId,
+  })
 }
 
 export function updateTask(

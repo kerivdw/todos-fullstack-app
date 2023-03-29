@@ -24,8 +24,7 @@ router.get('/list', async (_, res) => {
 //POST /api/v1/task
 router.post('/', async (req, res) => {
   try {
-    console.log(req.body)
-    const [{ description, taskListId }] = req.body
+    const [{ description, taskListId, createdAt }] = req.body
     if (!description) {
       res.status(400).send('The task description is missing')
       return
@@ -34,19 +33,20 @@ router.post('/', async (req, res) => {
       res.status(400).send('The list is missing')
       return
     }
-    console.log(description)
-    console.log(taskListId)
-
-    const date = new Date().toISOString()
+    if (!createdAt) {
+      res.status(400).send('The created date is missing')
+      return
+    }
 
     const newTask: NewTask = {
       description: description,
-      createdAt: date,
+      createdAt: createdAt,
       completedAt: null,
       taskListId: taskListId,
     }
 
-    const id = await createTask(newTask)
+    const [id] = await createTask(newTask)
+
     res.json({
       task: {
         id: id,
@@ -106,21 +106,19 @@ router.post('/update', async (req, res) => {
 //POST /api/v1/task/delete
 router.post('/delete', async (req, res) => {
   try {
-    console.log(req.body)
     const [{ id }] = req.body
-    console.log(id)
     if (!id) {
       res.status(400).send('The task id is missing')
       return
     }
     const recordsUpdated = await deleteTask(id)
-    if(recordsUpdated === 1) {
+    if (recordsUpdated === 1) {
       res.sendStatus(204)
     }
-    if(recordsUpdated === 0) {
+    if (recordsUpdated === 0) {
       res.status(503).send('the task record does not exist')
     }
-    if(recordsUpdated > 1) {
+    if (recordsUpdated > 1) {
       res.status(500).send('more than one record was deleted in error')
     }
   } catch (error) {
