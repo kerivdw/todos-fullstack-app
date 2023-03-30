@@ -1,6 +1,5 @@
 import request from 'supertest'
 import server from '../server'
-import { Task, NewTask } from '../../models/Task'
 
 import * as db from '../db'
 
@@ -112,6 +111,58 @@ describe('POST /api/v1/task', () => {
     })
   })
 
+  it('Should return an error when the description is missing', async () => {
+    const requestBody = [
+      {
+        createdAt: '2023-03-29T14:57:17.351Z',
+        completedAt: null,
+        taskListId: 1,
+      },
+    ]
+
+    const response = await request(server)
+      .post('/api/v1/task/')
+      .send(requestBody)
+
+    expect(response.status).toBe(400)
+    expect(response.text).toBe('The task description is missing')
+  })
+
+  it('Should return an error when the taskId is missing', async () => {
+    const requestBody = [
+      {
+        description: 'New Task',
+        createdAt: '2023-03-29T14:57:17.351Z',
+        completedAt: null,
+      },
+    ]
+
+    const response = await request(server)
+      .post('/api/v1/task/')
+      .send(requestBody)
+
+    expect(response.status).toBe(400)
+    expect(response.text).toBe('The list is missing')
+  })
+
+  it('Should return an error when createdAt is missing', async () => {
+    const requestBody = [
+      {
+        description: 'New Task',
+        createdAt: null,
+        completedAt: null,
+        taskListId: 1,
+      },
+    ]
+
+    const response = await request(server)
+      .post('/api/v1/task/')
+      .send(requestBody)
+
+    expect(response.status).toBe(400)
+    expect(response.text).toBe('The created date is missing')
+  })
+
   it('Should return an error when a task cannot be created', async () => {
     jest.mocked(db.createTask).mockRejectedValue({
       status: 500,
@@ -130,14 +181,186 @@ describe('POST /api/v1/task', () => {
 })
 
 describe('POST /api/v1/task/update', () => {
-  it.todo('Should update the completed at date')
-  it.todo('Should update the description')
-  it.todo('Should return an error when a task cannot be updated')
+  it('Should update the completed at date', async () => {
+    jest.mocked(db.createTask).mockResolvedValue([1])
+
+    const mockUpdatedTask = jest.fn().mockResolvedValue([
+      {
+        id: 1,
+        description: 'Update Task',
+        createdAt: '2023-03-29T14:57:17.351Z',
+        completedAt: null,
+        taskListId: 1,
+      },
+    ])
+
+    jest.mock('../db', () => ({
+      updatedTask: mockUpdatedTask,
+    }))
+
+    const requestBody = [
+      {
+        id: 1,
+        completedAt: '2023-03-29T14:57:17.351Z',
+      },
+    ]
+
+    const response = await request(server)
+      .post('/api/v1/task/update')
+      .send(requestBody)
+
+    expect(response.status).toBe(200)
+    expect(response.body).toEqual({
+      task: {
+        id: 1,
+        completedAt: '2023-03-29T14:57:17.351Z',
+      },
+    })
+  })
+  it('Should update the description', async () => {
+    jest.mocked(db.createTask).mockResolvedValue([1])
+
+    const mockUpdatedTask = jest.fn().mockResolvedValue([
+      {
+        id: 1,
+        description: 'Updated Task Description',
+        createdAt: '2023-03-29T14:57:17.351Z',
+        completedAt: null,
+        taskListId: 1,
+      },
+    ])
+
+    jest.mock('../db', () => ({
+      updatedTask: mockUpdatedTask,
+    }))
+
+    const requestBody = [
+      {
+        id: 1,
+        description: 'Updated Task Description',
+      },
+    ]
+
+    const response = await request(server)
+      .post('/api/v1/task/update')
+      .send(requestBody)
+
+    expect(response.status).toBe(200)
+    expect(response.body).toEqual({
+      task: {
+        id: 1,
+        description: 'Updated Task Description',
+      },
+    })
+  })
+  it('Should return an error when id is missing', async () => {
+    const requestBody = [
+      {
+        description: 'New Task',
+        createdAt: null,
+        completedAt: null,
+        taskListId: 1,
+      },
+    ]
+
+    const response = await request(server)
+      .post('/api/v1/task/update')
+      .send(requestBody)
+
+    expect(response.status).toBe(400)
+    expect(response.text).toBe('The task id is missing')
+  })
+  it('Should return an error when the description and completedAt are missing', async () => {
+    const requestBody = [
+      {
+        id: 1,
+        createdAt: null,
+        taskListId: 1,
+      },
+    ]
+
+    const response = await request(server)
+      .post('/api/v1/task/update')
+      .send(requestBody)
+
+    expect(response.status).toBe(400)
+    expect(response.text).toBe('The description or completed date are missing')
+  })
+  it('Should return an error when a task cannot be updated', async () => {
+    jest.mocked(db.createTask).mockRejectedValue({
+      status: 500,
+      data: {
+        message: 'Internal server error',
+      },
+    })
+
+    const response = await request(server).post('/api/v1/task/update')
+
+    expect(response.status).toBe(500)
+    expect(response.body).toEqual({
+      error: 'There was an error updating the task',
+    })
+  })
 })
 
 describe('POST /api/v1/task/delete', () => {
-  it.todo('Should delete a task')
-  it.todo('Should return an error if no tasks are deleted')
-  it.todo('Should return an error if more than one task is deleted')
-  it.todo('Should return an error when a task cannot be deleted')
+  it('Should delete a task', async () => {
+    jest.mocked(db.deleteTask).mockResolvedValue(1)
+
+    const requestBody = [
+      {
+        id: 1,
+      },
+    ]
+
+    const response = await request(server)
+      .post('/api/v1/task/delete')
+      .send(requestBody)
+
+    expect(response.status).toBe(204)
+  })
+
+  it('Should return an error if no tasks are deleted', async () => {
+    jest.mocked(db.deleteTask).mockResolvedValue(0)
+    const requestBody = [
+      {
+        id: 1,
+      },
+    ]
+    const response = await request(server)
+      .post('/api/v1/task/delete')
+      .send(requestBody)
+
+    expect(response.status).toBe(503)
+    expect(response.text).toBe('the task record does not exist')
+  })
+  it('Should return an error if more than one task is deleted', async () => {
+    jest.mocked(db.deleteTask).mockResolvedValue(2)
+    const requestBody = [
+      {
+        id: 1,
+      },
+    ]
+    const response = await request(server)
+      .post('/api/v1/task/delete')
+      .send(requestBody)
+
+    expect(response.status).toBe(500)
+    expect(response.text).toBe('more than one record was deleted in error')
+  })
+  it('Should return an error when a task cannot be deleted', async () => {
+    jest.mocked(db.deleteTask).mockRejectedValue({
+      status: 500,
+      data: {
+        message: 'Internal server error',
+      },
+    })
+
+    const response = await request(server).post('/api/v1/task/delete')
+
+    expect(response.status).toBe(500)
+    expect(response.body).toEqual({
+      error: 'There was an error deleting the task',
+    })
+  })
 })

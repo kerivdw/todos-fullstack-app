@@ -57,7 +57,6 @@ router.post('/', async (req, res) => {
       },
     })
   } catch (error) {
-    console.log(error)
     res.status(500).json({
       error: 'There was an error creating the task',
     })
@@ -67,7 +66,6 @@ router.post('/', async (req, res) => {
 //POST /api/v1/task/update
 router.post('/update', async (req, res) => {
   try {
-    console.log(req.body)
     const [{ id, description, createdAt, completedAt, taskListId }] = req.body
     if (!id) {
       res.status(400).send('The task id is missing')
@@ -85,8 +83,7 @@ router.post('/update', async (req, res) => {
       taskListId: taskListId,
     }
 
-    const response = await updateTask(id, updatedTask)
-    console.log(response)
+    await updateTask(id, updatedTask)
     res.json({
       task: {
         id: id,
@@ -98,7 +95,7 @@ router.post('/update', async (req, res) => {
     })
   } catch (error) {
     res.status(500).json({
-      error: 'There was an error creating the task',
+      error: 'There was an error updating the task',
     })
   }
 })
@@ -122,8 +119,6 @@ router.post('/delete', async (req, res) => {
       res.status(500).send('more than one record was deleted in error')
     }
   } catch (error) {
-    console.log(error)
-
     res.status(500).json({
       error: 'There was an error deleting the task',
     })
