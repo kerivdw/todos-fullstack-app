@@ -46,6 +46,8 @@ Here's a list of steps in case they are useful. You can build in any order you l
 - [x] Design a database to store a list of tasks, e.g. task details, priority, completed yes/no
 - [x] Build the migrations and seed data
 
+
+
 ### 2. Building the API
 - [x] Build an API (back end route) to get the information from your database (list, add, update and delete)
 - [x] Test your API with Insomnia
@@ -55,29 +57,7 @@ Here's a list of steps in case they are useful. You can build in any order you l
 ### 3. Setting the stage
 
 - [x] Build a React component with static html
-
-User Stories: rea
-
-      Component Add Tasks: 
-- [ ] As a user I want to add a task
-- [ ] As a user I want to select all the tasks
-- [ ] As a user I want to toggle all the tasks on and off
-
-      Component Task List
-- [ ] As a user I want to display a list of tasks with a selection check box
-- [ ] As a user I want to display an option to delete a task
-
-      Component Update Task
-- [ ] As a user I want to update the task
-
-      Component Filter
-- [ ] As a user I want to show how many active items are left
-- [ ] As a user I want to filter by all, active and completed tasks
-- [ ] As a user I want to clear all the completed tasks
-
-
-
-- [ ] Design Redux global state (think of it like a JS object)
+- [x] Design Redux global state (think of it like a JS object)
 - [ ] Build Redux reducers (the properties or keys of your state design are reducers, the values are hard-code static data as initialState)
 
 ## 4. Building the API client
@@ -99,3 +79,23 @@ User Stories: rea
 
 ---
 [Provide feedback on this repo](https://docs.google.com/forms/d/e/1FAIpQLSfw4FGdWkLwMLlUaNQ8FtP2CTJdGDUv6Xoxrh19zIrJSkvT4Q/viewform?usp=pp_url&entry.1958421517=todo-full-stack)
+
+
+## User Stories:
+
+      Component Add Tasks: 
+- [ ] As a user I want to add a task
+- [ ] As a user I want to select all the tasks
+- [ ] As a user I want to toggle all the tasks on and off
+
+      Component Task List
+- [ ] As a user I want to display a list of tasks with a selection check box
+- [ ] As a user I want to display an option to delete a task
+
+      Component Update Task
+- [ ] As a user I want to update the task
+
+      Component Filter
+- [ ] As a user I want to show how many active items are left
+- [ ] As a user I want to filter by all, active and completed tasks
+- [ ] As a user I want to clear all the completed tasks
