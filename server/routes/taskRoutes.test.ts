@@ -9,7 +9,7 @@ beforeEach(() => {
   jest.resetAllMocks()
 })
 
-//TODO Finish writing API Tests
+
 describe('GET /api/v1/task/list', () => {
   it('Should return the list of tasks', async () => {
     jest.mocked(db.getAllTasksByUser).mockResolvedValue([

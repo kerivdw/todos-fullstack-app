@@ -1,8 +1,38 @@
+import { useState } from 'react'
 import AddTask from './AddTask'
 import Footer from './Footer'
 import TaskList from './TaskList'
+import { useDispatch } from 'react-redux'
+import { setTaskSuccess } from '../actions/task'
 
 function App() {
+  const dispatch = useDispatch()
+  const [testTask, setTesTasks] = useState([
+    {
+      id: 1,
+      description: 'Task 1',
+      createdAt: '2023-04-01',
+      completedAt: null,
+      taskListId: 1,
+    },
+    {
+      id: 2,
+      description: 'Task 2',
+      createdAt: '2023-04-01',
+      completedAt: null,
+      taskListId: 1,
+    },
+    {
+      id: 3,
+      description: 'Task 3',
+      createdAt: '2023-04-01',
+      completedAt: '2023-04-01',
+      taskListId: 1,
+    },
+  ])
+
+  dispatch(setTaskSuccess(testTask))
+
   return (
     <>
       <header className="header">
@@ -10,9 +40,9 @@ function App() {
         <AddTask />
       </header>
       <section className="main">
-      <input className="toggle-all" type="text" />
-      <label htmlFor="toggle-all">Mark all as complete</label>
-        <TaskList />
+        <input className="toggle-all" type="text" />
+        <label htmlFor="toggle-all">Mark all as complete</label>
+        <TaskList tasks={testTask} />
       </section>
       <Footer />
     </>
