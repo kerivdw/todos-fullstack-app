@@ -9,16 +9,24 @@ For this challenge, we will build a todo app (which is a common way to practice 
   <details style="padding-left: 2em">
     <summary>Tip</summary>
 
-    You may also want to start a new branch
     ```sh
     cd todo-full-stack
     npm i
-    git checkout -b <branchname>
     npm run dev
+
     ```
   </details>
 
-- [x] See the designs [here](http://localhost:3000/designs/)
+- [x] Update the database
+
+  <details style="padding-left: 2em">
+    <summary>Tip</summary>
+
+    ```sh
+    npm run knex migrate:latest
+    npm run knex seed:run
+    ```
+  </details>
 
 <details>
   <summary>More about using <code>npm</code> vs <code>npx</code></summary>
@@ -46,7 +54,29 @@ Here's a list of steps in case they are useful. You can build in any order you l
 
 ### 3. Setting the stage
 
-- [ ] Build a React component with static html
+- [x] Build a React component with static html
+
+User Stories: rea
+
+      Component Add Tasks: 
+- [ ] As a user I want to add a task
+- [ ] As a user I want to select all the tasks
+- [ ] As a user I want to toggle all the tasks on and off
+
+      Component Task List
+- [ ] As a user I want to display a list of tasks with a selection check box
+- [ ] As a user I want to display an option to delete a task
+
+      Component Update Task
+- [ ] As a user I want to update the task
+
+      Component Filter
+- [ ] As a user I want to show how many active items are left
+- [ ] As a user I want to filter by all, active and completed tasks
+- [ ] As a user I want to clear all the completed tasks
+
+
+
 - [ ] Design Redux global state (think of it like a JS object)
 - [ ] Build Redux reducers (the properties or keys of your state design are reducers, the values are hard-code static data as initialState)
 

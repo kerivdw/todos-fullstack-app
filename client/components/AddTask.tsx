@@ -1,5 +1,5 @@
-// eslint-disable-next-line no-unused-vars
-function AddTodo() {
+
+function AddTask() {
   return (
     <>
       <input
@@ -11,4 +11,4 @@ function AddTodo() {
   )
 }
 
-export default AddTodo
+export default AddTask

@@ -1,14 +1,20 @@
-import AddTodo from './AddTodo'
+import AddTask from './AddTask'
+import Footer from './Footer'
+import TaskList from './TaskList'
 
 function App() {
   return (
     <>
       <header className="header">
         <h1>todos</h1>
-        <AddTodo />
+        <AddTask />
       </header>
-      <section className="main"></section>
-      <footer className="footer"></footer>
+      <section className="main">
+      <input className="toggle-all" type="text" />
+      <label htmlFor="toggle-all">Mark all as complete</label>
+        <TaskList />
+      </section>
+      <Footer />
     </>
   )
 }
