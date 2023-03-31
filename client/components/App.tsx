@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import AddTask from './AddTask'
 import Footer from './Footer'
 import TaskList from './TaskList'
@@ -7,9 +7,9 @@ import { useDispatch } from 'react-redux'
 import { setTaskSuccess } from '../actions/task'
 
 function App() {
-  const { loading, error, data } = useAppSelector(state => state.tasks)
+  const { loading, error, data } = useAppSelector((state) => state.tasks)
   const dispatch = useDispatch()
-  const [testTask, setTesTasks] = useState([
+  const [task, setTask] = useState([
     {
       id: 1,
       description: 'Task 1',
@@ -33,7 +33,9 @@ function App() {
     },
   ])
 
-  dispatch(setTaskSuccess(testTask))
+  useEffect(() => {
+    dispatch(setTaskSuccess(task))
+  }, [dispatch, task])
 
   return (
     <>
