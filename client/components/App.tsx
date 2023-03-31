@@ -2,10 +2,12 @@ import { useState } from 'react'
 import AddTask from './AddTask'
 import Footer from './Footer'
 import TaskList from './TaskList'
+import { useAppDispatch, useAppSelector } from '../hooks'
 import { useDispatch } from 'react-redux'
 import { setTaskSuccess } from '../actions/task'
 
 function App() {
+  const { loading, error, data } = useAppSelector(state => state.tasks)
   const dispatch = useDispatch()
   const [testTask, setTesTasks] = useState([
     {
@@ -42,7 +44,7 @@ function App() {
       <section className="main">
         <input className="toggle-all" type="text" />
         <label htmlFor="toggle-all">Mark all as complete</label>
-        <TaskList tasks={testTask} />
+        <TaskList tasks={data} />
       </section>
       <Footer />
     </>
