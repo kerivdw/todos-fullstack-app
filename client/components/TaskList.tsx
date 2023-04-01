@@ -13,15 +13,13 @@ function TaskList(props: Props) {
           const taskid = "task-" + task.id
 
           return(
-            <>
-            <li key={task.id}>
-              <div className="view">
-                <input type="text" name={taskid} id={taskid} className="toggle" />
-                <label htmlFor={taskid}>{task.description}</label>
-                <button className="destroy"></button>
-              </div>
-            </li>
-          </>
+              <li key={task.id}>
+                <div className="view">
+                  <input type="text" name={taskid} id={taskid} className="toggle" />
+                  <label role="text" htmlFor={taskid}>{task.description}</label>
+                  <button className="destroy"></button>
+                </div>
+              </li>
           )
       })}
     </ul>

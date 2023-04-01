@@ -6,7 +6,7 @@ import {
 } from '../actions/task'
 import { Task } from '../../models/task'
 
-interface TaskState {
+export interface TaskState {
   loading: boolean
   error: string | undefined
   data: Task[]

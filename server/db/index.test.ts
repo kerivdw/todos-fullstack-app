@@ -30,7 +30,7 @@ describe('Tasks', () => {
   it('should return all the tasks for a user', async () => {
     await getAllTasksByUser(1).then((tasks: Task[]) => {
       expect(tasks).toHaveLength(4)
-      expect(tasks[0].description).toBe('Head To The Gym')
+      expect(tasks[0].description).toBe('Head to the gym')
       const year = new Date().getFullYear()
       expect(tasks[0].createdAt).toContain(String(year))
       expect(tasks[0].completedAt).toBeNull()
