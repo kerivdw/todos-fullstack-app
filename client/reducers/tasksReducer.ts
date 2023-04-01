@@ -15,7 +15,29 @@ interface TaskState {
 const initialState: TaskState = {
   loading: false,
   error: undefined,
-  data: [],
+  data: [
+    {
+      id: 1,
+      description: 'Task 1',
+      createdAt: '2023-04-01',
+      completedAt: null,
+      taskListId: 1,
+    },
+    {
+      id: 2,
+      description: 'Task 2',
+      createdAt: '2023-04-01',
+      completedAt: null,
+      taskListId: 1,
+    },
+    {
+      id: 3,
+      description: 'Task 3',
+      createdAt: '2023-04-01',
+      completedAt: '2023-04-01',
+      taskListId: 1,
+    },
+  ],
 }
 
 const reducer = (state = initialState, action: TaskAction): TaskState => {
