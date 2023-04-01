@@ -1,5 +1,5 @@
 import express from 'express'
-import { Task, NewTask, UpdatedTask } from '../../models/Task'
+import { Task, NewTask, UpdatedTask } from '../../models/task'
 
 import { getAllTasksByUser, createTask, updateTask, deleteTask } from '../db'
 
@@ -10,7 +10,8 @@ router.use(express.json())
 //GET /api/v1/task/list
 router.get('/list', async (_, res) => {
   try {
-    //hard coded for mvp
+    //hard coded for mvp, may allow authentication in the future
+    //that will allow more than one user.
     const currentUser = 1
     const taskArr: Task[] = await getAllTasksByUser(currentUser)
     res.json({ tasks: taskArr })

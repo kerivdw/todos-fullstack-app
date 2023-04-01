@@ -4,7 +4,7 @@ import {
   SET_ERROR,
   TaskAction,
 } from '../actions/task'
-import { Task } from '../../models/Task'
+import { Task } from '../../models/task'
 
 interface TaskState {
   loading: boolean
@@ -15,29 +15,7 @@ interface TaskState {
 const initialState: TaskState = {
   loading: false,
   error: undefined,
-  data: [
-    {
-      id: 1,
-      description: 'Task 1',
-      createdAt: '2023-04-01',
-      completedAt: null,
-      taskListId: 1,
-    },
-    {
-      id: 2,
-      description: 'Task 2',
-      createdAt: '2023-04-01',
-      completedAt: null,
-      taskListId: 1,
-    },
-    {
-      id: 3,
-      description: 'Task 3',
-      createdAt: '2023-04-01',
-      completedAt: '2023-04-01',
-      taskListId: 1,
-    },
-  ],
+  data: [],
 }
 
 const reducer = (state = initialState, action: TaskAction): TaskState => {

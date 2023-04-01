@@ -1,12 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useEffect} from 'react'
+import { useAppSelector, useAppDispatch } from '../hooks'
+import { fetchTasks } from '../actions/task'
 import AddTask from './AddTask'
 import Footer from './Footer'
 import TaskList from './TaskList'
-import { useAppDispatch, useAppSelector } from '../hooks'
-import { setTaskSuccess } from '../actions/task'
 
 function App() {
   const { loading, error, data } = useAppSelector((state) => state.tasks)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(fetchTasks())
+  }, [dispatch])
+
 
   return (
     <>

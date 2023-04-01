@@ -1,4 +1,4 @@
-import { Task } from '../../models/Task'
+import { Task } from '../../models/task'
 
 interface Props {
   tasks: Task[]
@@ -7,18 +7,22 @@ interface Props {
 function TaskList(props: Props) {
   return (
     <ul className="todo-list">
+      
       {props.tasks.map((task) => {
-        return (
-          <>
-            <li key={task.taskListId}>
+
+          const taskid = "task-" + task.id
+
+          return(
+            <>
+            <li key={task.id}>
               <div className="view">
-                <input type="text" className="toggle" />
-                <label htmlFor="#">{task.description}</label>
+                <input type="text" name={taskid} id={taskid} className="toggle" />
+                <label htmlFor={taskid}>{task.description}</label>
                 <button className="destroy"></button>
               </div>
             </li>
           </>
-        )
+          )
       })}
     </ul>
   )

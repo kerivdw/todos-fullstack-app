@@ -2,7 +2,7 @@ const environment = process.env.NODE_ENV || 'development'
 const config = require('./knexfile')
 const connection = require('knex')(config[environment])
 
-import { Task, NewTask, UpdatedTask } from '../../models/Task'
+import { Task, NewTask, UpdatedTask } from '../../models/task'
 
 export function getAllTasksByUser(
   authId = 1,

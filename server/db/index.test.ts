@@ -1,4 +1,4 @@
-import { NewTask, Task, UpdatedTask } from '../../models/Task'
+import { NewTask, Task, UpdatedTask } from '../../models/task'
 
 const environment = 'test'
 const config = require('./knexfile')

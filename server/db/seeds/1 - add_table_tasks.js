@@ -13,25 +13,25 @@ dateLastWeek.setDate(dateToday.getDate() - 7)
 exports.seed = async function (knex) {
   await knex('tasks').insert([
     {
-      description: 'Head To The Gym',
+      description: 'Head to the gym',
       created_at: dateToday.toISOString(),
       completed_at: null,
       task_list_id: 1,
     },
     {
-      description: 'Watch A Bad Movie',
+      description: 'Watch a bad movie',
       created_at: dateYesterday.toISOString(),
       completed_at: null,
       task_list_id: 1,
     },
     {
-      description: 'Go Camping',
+      description: 'Code a personal project',
       created_at: dateLastWeek.toISOString(),
       completed_at: dateYesterday.toISOString(),
       task_list_id: 1,
     },
     {
-      description: 'Plant a Garden',
+      description: 'Plant a garden',
       created_at: dateLastWeek.toISOString(),
       completed_at: dateLastWeek.toISOString(),
       task_list_id: 1,
