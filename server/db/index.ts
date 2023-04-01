@@ -51,5 +51,5 @@ export function updateTask(
 }
 
 export function deleteTask(id: number, db = connection): Promise<number> {
-  return db('tasks').where({ id }).delete()
+  return  db('tasks').where({ id }).delete()
 }

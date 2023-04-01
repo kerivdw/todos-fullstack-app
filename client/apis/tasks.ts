@@ -13,3 +13,9 @@ export async function addTask(newTask: NewTask) : Promise<Task> {
   const response = await request.post(rootUrl + '/').send(newTask)
   return response.body.task
 }
+
+export async function deletesTask(taskId: string) : Promise<number> {
+  const response = await request.post(rootUrl + '/delete/' + taskId)
+  console.log(response)
+  return 1
+}

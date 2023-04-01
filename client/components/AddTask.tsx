@@ -18,7 +18,6 @@ function AddTask(props: Props) {
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
 
     const description = event.target.value
-    console.log(description)
     setNewDescription(description)
 }
   

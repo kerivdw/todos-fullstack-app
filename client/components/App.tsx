@@ -1,4 +1,4 @@
-import { useEffect} from 'react'
+import { useEffect } from 'react'
 import { useAppSelector, useAppDispatch } from '../hooks'
 import { fetchTasks } from '../actions/task'
 import AddTask from './AddTask'
@@ -26,7 +26,7 @@ function App() {
       <section className="main">
         <input className="toggle-all" type="text" />
         <label htmlFor="toggle-all">Mark all as complete</label>
-        <TaskList tasks={data} />
+        <TaskList tasks={data} onTaskAdded={handleTaskAdded} />
       </section>
       <Footer />
     </>

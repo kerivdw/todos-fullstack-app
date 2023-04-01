@@ -25,7 +25,6 @@ router.get('/list', async (_, res) => {
 //POST /api/v1/task
 router.post('/', async (req, res) => {
   try {
-    console.log(req.body)
     const { description, taskListId, createdAt } = req.body
     if (!description) {
       res.status(400).send('The task description is missing')
@@ -103,14 +102,14 @@ router.post('/update', async (req, res) => {
 })
 
 //POST /api/v1/task/delete
-router.post('/delete', async (req, res) => {
+router.post('/delete/:id', async (req, res) => {
   try {
-    const [{ id }] = req.body
+    const id = req.params.id
     if (!id) {
       res.status(400).send('The task id is missing')
       return
     }
-    const recordsUpdated = await deleteTask(id)
+    const recordsUpdated = await deleteTask(Number(id))
     if (recordsUpdated === 1) {
       res.sendStatus(204)
     }

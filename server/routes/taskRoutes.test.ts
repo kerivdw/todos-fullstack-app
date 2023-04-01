@@ -9,7 +9,6 @@ beforeEach(() => {
   jest.resetAllMocks()
 })
 
-
 describe('GET /api/v1/task/list', () => {
   it('Should return the list of tasks', async () => {
     jest.mocked(db.getAllTasksByUser).mockResolvedValue([
@@ -87,12 +86,11 @@ describe('POST /api/v1/task', () => {
     }))
 
     const requestBody = {
-        description: 'New Task',
-        createdAt: '2023-03-29T14:57:17.351Z',
-        completedAt: null,
-        taskListId: 1,
-      }
-    
+      description: 'New Task',
+      createdAt: '2023-03-29T14:57:17.351Z',
+      completedAt: null,
+      taskListId: 1,
+    }
 
     const response = await request(server)
       .post('/api/v1/task/')
@@ -129,10 +127,10 @@ describe('POST /api/v1/task', () => {
 
   it('Should return an error when the taskId is missing', async () => {
     const requestBody = {
-        description: 'New Task',
-        createdAt: '2023-03-29T14:57:17.351Z',
-        completedAt: null,
-      }
+      description: 'New Task',
+      createdAt: '2023-03-29T14:57:17.351Z',
+      completedAt: null,
+    }
 
     const response = await request(server)
       .post('/api/v1/task/')
@@ -144,11 +142,11 @@ describe('POST /api/v1/task', () => {
 
   it('Should return an error when createdAt is missing', async () => {
     const requestBody = {
-        description: 'New Task',
-        createdAt: null,
-        completedAt: null,
-        taskListId: 1,
-      }
+      description: 'New Task',
+      createdAt: null,
+      completedAt: null,
+      taskListId: 1,
+    }
 
     const response = await request(server)
       .post('/api/v1/task/')
@@ -166,17 +164,16 @@ describe('POST /api/v1/task', () => {
       },
     })
 
-       const requestBody = {
-        description: 'New Task',
-        createdAt: '2023-03-29T14:57:17.351Z',
-        completedAt: null,
-        taskListId: 1,
-      }
+    const requestBody = {
+      description: 'New Task',
+      createdAt: '2023-03-29T14:57:17.351Z',
+      completedAt: null,
+      taskListId: 1,
+    }
 
-      const response = await request(server)
+    const response = await request(server)
       .post('/api/v1/task/')
       .send(requestBody)
-
 
     expect(response.status).toBe(500)
     expect(response.body).toEqual({
@@ -312,43 +309,24 @@ describe('POST /api/v1/task/delete', () => {
   it('Should delete a task', async () => {
     jest.mocked(db.deleteTask).mockResolvedValue(1)
 
-    const requestBody = [
-      {
-        id: 1,
-      },
-    ]
-
-    const response = await request(server)
-      .post('/api/v1/task/delete')
-      .send(requestBody)
+     const response = await request(server).post('/api/v1/task/delete/1')
 
     expect(response.status).toBe(204)
   })
 
   it('Should return an error if no tasks are deleted', async () => {
     jest.mocked(db.deleteTask).mockResolvedValue(0)
-    const requestBody = [
-      {
-        id: 1,
-      },
-    ]
     const response = await request(server)
-      .post('/api/v1/task/delete')
-      .send(requestBody)
+      .post('/api/v1/task/delete/1')
 
     expect(response.status).toBe(503)
     expect(response.text).toBe('the task record does not exist')
   })
   it('Should return an error if more than one task is deleted', async () => {
     jest.mocked(db.deleteTask).mockResolvedValue(2)
-    const requestBody = [
-      {
-        id: 1,
-      },
-    ]
+
     const response = await request(server)
-      .post('/api/v1/task/delete')
-      .send(requestBody)
+      .post('/api/v1/task/delete/1')
 
     expect(response.status).toBe(500)
     expect(response.text).toBe('more than one record was deleted in error')
@@ -361,7 +339,7 @@ describe('POST /api/v1/task/delete', () => {
       },
     })
 
-    const response = await request(server).post('/api/v1/task/delete')
+    const response = await request(server).post('/api/v1/task/delete/1')
 
     expect(response.status).toBe(500)
     expect(response.body).toEqual({
