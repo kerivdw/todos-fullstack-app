@@ -86,14 +86,13 @@ describe('POST /api/v1/task', () => {
       createTask: mockCreateTask,
     }))
 
-    const requestBody = [
-      {
+    const requestBody = {
         description: 'New Task',
         createdAt: '2023-03-29T14:57:17.351Z',
         completedAt: null,
         taskListId: 1,
-      },
-    ]
+      }
+    
 
     const response = await request(server)
       .post('/api/v1/task/')
@@ -129,13 +128,11 @@ describe('POST /api/v1/task', () => {
   })
 
   it('Should return an error when the taskId is missing', async () => {
-    const requestBody = [
-      {
+    const requestBody = {
         description: 'New Task',
         createdAt: '2023-03-29T14:57:17.351Z',
         completedAt: null,
-      },
-    ]
+      }
 
     const response = await request(server)
       .post('/api/v1/task/')
@@ -146,14 +143,12 @@ describe('POST /api/v1/task', () => {
   })
 
   it('Should return an error when createdAt is missing', async () => {
-    const requestBody = [
-      {
+    const requestBody = {
         description: 'New Task',
         createdAt: null,
         completedAt: null,
         taskListId: 1,
-      },
-    ]
+      }
 
     const response = await request(server)
       .post('/api/v1/task/')
@@ -171,7 +166,17 @@ describe('POST /api/v1/task', () => {
       },
     })
 
-    const response = await request(server).post('/api/v1/task/')
+       const requestBody = {
+        description: 'New Task',
+        createdAt: '2023-03-29T14:57:17.351Z',
+        completedAt: null,
+        taskListId: 1,
+      }
+
+      const response = await request(server)
+      .post('/api/v1/task/')
+      .send(requestBody)
+
 
     expect(response.status).toBe(500)
     expect(response.body).toEqual({

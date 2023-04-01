@@ -10,7 +10,7 @@ import App from './App'
 import { initaliseStore } from '../store'
 
 
-describe('thunk actions', () => {
+describe('thunk fetch task actions', () => {
   it('should show a list of tasks', async () => {   
     const scope = nock("http://localhost")
     .get("/api/v1/task/list")

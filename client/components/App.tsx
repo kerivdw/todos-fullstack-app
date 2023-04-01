@@ -13,12 +13,15 @@ function App() {
     dispatch(fetchTasks())
   }, [dispatch])
 
+  function handleTaskAdded() {
+    dispatch(fetchTasks())
+  }
 
   return (
     <>
       <header className="header">
         <h1>todos</h1>
-        <AddTask />
+        <AddTask onTaskAdded={handleTaskAdded} />
       </header>
       <section className="main">
         <input className="toggle-all" type="text" />

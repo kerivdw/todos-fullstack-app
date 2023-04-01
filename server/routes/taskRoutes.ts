@@ -11,7 +11,7 @@ router.use(express.json())
 router.get('/list', async (_, res) => {
   try {
     //hard coded for mvp, may allow authentication in the future
-    //that will allow more than one user.
+    //that will allow more than one
     const currentUser = 1
     const taskArr: Task[] = await getAllTasksByUser(currentUser)
     res.json({ tasks: taskArr })
@@ -25,7 +25,8 @@ router.get('/list', async (_, res) => {
 //POST /api/v1/task
 router.post('/', async (req, res) => {
   try {
-    const [{ description, taskListId, createdAt }] = req.body
+    console.log(req.body)
+    const { description, taskListId, createdAt } = req.body
     if (!description) {
       res.status(400).send('The task description is missing')
       return
