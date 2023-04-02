@@ -10,6 +10,14 @@ export async function getTasks(): Promise<Task[]> {
   return response.body.tasks
 }
 
+export async function getFilteredTasks(isComplete: boolean): Promise<Task[]> {
+  const response = await request.get(rootUrl + '/list')
+  const tasks: Task[] = response.body.tasks
+  return tasks.filter((task) => {
+    return task.isComplete === isComplete
+  })
+}
+
 export async function addTask(newTask: NewTask): Promise<Task> {
   const response = await request.post(rootUrl + '/').send(newTask)
   return response.body.task
@@ -25,9 +33,7 @@ export async function completeTask(
   isComplete: boolean
 ): Promise<number> {
   const dateToday = isComplete ? new Date().toISOString() : null
-  const updatedTask: UpdatedTask = [{ id: taskId, completedAt: dateToday }]
-
-  console.log(updatedTask)
+  const updatedTask :UpdatedTask = [{ id: taskId, completedAt: dateToday }]
 
   const response = await request.post(rootUrl + '/update').send(updatedTask)
   return response.statusCode

@@ -1,4 +1,10 @@
-import { getTasks, addTask, deletesTask, completeTask } from '../apis/tasks'
+import {
+  getTasks,
+  addTask,
+  deletesTask,
+  completeTask,
+  setfilterdTas,
+} from '../apis/tasks'
 import { Task, NewTask, UpdatedTask } from '../../models/task'
 import { Action, Dispatch } from 'redux'
 import { RootState, ThunkAction } from '../store'
@@ -72,6 +78,7 @@ export function fetchTasks(): ThunkAction {
       })
   }
 }
+
 
 export function addNewTask(newTask: NewTask): ThunkAction {
   return (dispatch: Dispatch) => {

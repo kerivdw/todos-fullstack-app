@@ -36,8 +36,9 @@ function TaskListItem(props: Props) {
         return
     }
   }
+
   return (
-    <li id="task-item" className={isCompleteClass} key={props.task.id}>
+    <li key={props.task.id} id="task-item" className={isCompleteClass}>
       <div className="view">
         <input
           type="checkbox"
@@ -60,4 +61,5 @@ function TaskListItem(props: Props) {
     </li>
   )
 }
+
 export default TaskListItem

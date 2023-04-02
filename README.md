@@ -84,13 +84,14 @@ Here's a list of steps in case they are useful. You can build in any order you l
 ## User Stories:
 
       Component Add Tasks: 
-- [ ] As a user I want to add a task
+- [x] As a user I want to add a task
 - [ ] As a user I want to select all the tasks
-- [ ] As a user I want to toggle all the tasks on and off
+- [ ] As a user I want to toggle all the tasks as completed or not completed
 
       Component Task List
-- [ ] As a user I want to display a list of tasks with a selection check box
-- [ ] As a user I want to display an option to delete a task
+- [x] As a user I want to display a list of tasks with a selection check box
+- [x] As a user I want to display an option to delete a task
+- [x] As a user I want to mark a task a completed or uncompleted
 
       Component Update Task
 - [ ] As a user I want to update the task
