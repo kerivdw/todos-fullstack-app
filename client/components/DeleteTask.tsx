@@ -1,5 +1,5 @@
 import { useAppDispatch } from '../hooks'
-import { deleteTask } from '../actions/task'
+import { deleteTask } from '../actions/taskActions'
 
 interface Props {
   id: number

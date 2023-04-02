@@ -7,6 +7,7 @@ interface Props {
 }
 
 function TaskList(props: Props) {
+  console.log(props)
   return (
     <ul className="todo-list">
       {props.tasks.map((task) => {

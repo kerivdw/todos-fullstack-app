@@ -18,6 +18,7 @@ describe('GET /api/v1/task/list', () => {
         createdAt: '2023-03-29T08:56:01.152Z',
         completedAt: null,
         taskListId: 1,
+        isComplete: false,
       },
       {
         id: 2,
@@ -25,6 +26,7 @@ describe('GET /api/v1/task/list', () => {
         createdAt: '2023-03-28T08:56:01.152Z',
         completedAt: null,
         taskListId: 1,
+        isComplete: false,
       },
     ])
 

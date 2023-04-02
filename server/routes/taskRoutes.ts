@@ -13,8 +13,14 @@ router.get('/list', async (_, res) => {
     //hard coded for mvp, may allow authentication in the future
     //that will allow more than one
     const currentUser = 1
-    const taskArr: Task[] = await getAllTasksByUser(currentUser)
-    res.json({ tasks: taskArr })
+
+    const dataResults: Task[] = await getAllTasksByUser(currentUser)
+
+    const taskArray: Task[] = await dataResults.map((task) => {
+      return { ...task, isComplete: task.completedAt !== null }
+    })
+
+    res.json({ tasks: taskArray })
   } catch (error) {
     res.status(500).json({
       error: 'There was an error retrieving the tasks',
@@ -70,10 +76,6 @@ router.post('/update', async (req, res) => {
     const [{ id, description, createdAt, completedAt, taskListId }] = req.body
     if (!id) {
       res.status(400).send('The task id is missing')
-      return
-    }
-    if (!description && !completedAt) {
-      res.status(400).send('The description or completed date are missing')
       return
     }
 

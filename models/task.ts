@@ -7,6 +7,7 @@ export interface NewTask {
 
 export interface Task extends NewTask {
   id: number
+  isComplete: boolean
 }
 
 export interface UpdatedTask extends Partial<Task> {

@@ -1,45 +1,63 @@
-import { useRef } from 'react'
-import {Task} from '../../models/task'
+import { useAppDispatch } from '../hooks'
+import { useRef, useState } from 'react'
+import { Task } from '../../models/task'
 import DeleteTask from './DeleteTask'
+import { updateTaskComplete } from '../actions/taskActions'
 
 interface Props {
   task: Task
   onTaskAdded: () => void
 }
 
-function TaskListItem(props : Props) {
+function TaskListItem(props: Props) {
+  const dispatch = useAppDispatch()
+  const checkboxRef = useRef<HTMLInputElement>(null)
+  const [isCompleteClass, setIsCompleteClass] = useState(
+    props.task.isComplete ? 'completed' : ''
+  )
 
-  const checkboxRef = useRef<HTMLInputElement>(false)
   function handleCheckboxChange() {
-    console.log(checkboxRef.current?.checked)
+    switch (checkboxRef.current?.checked) {
+      case true:
+        setIsCompleteClass('completed')
+        if (props.task.isComplete !== true) {
+          dispatch(updateTaskComplete(props.task.id, true))
+          props.onTaskAdded()
+        }
+        break
+      case false:
+        setIsCompleteClass('')
+        if (props.task.isComplete === true) {
+          dispatch(updateTaskComplete(props.task.id, false))
+          props.onTaskAdded()
+        }
+        break
+      default:
+        return
+    }
   }
-
-    const taskId = 'task-' + props.task.id
-  const isTaskCompleted = props.task.completedAt !== null ? true : false
-  const listItem = document.getElementById('task-item')
-  isTaskCompleted === true
-    ? listItem?.className.add('completed')
-    : listItem?.className.remove('completed')
-    
   return (
-    <li id="task-item" key={props.task.id}>
-    <div className="view">
-      <input
-        type="checkbox"
-        name={taskId}
-        id={taskId}
-        className="toggle"
-        ref={checkboxRef}
-        defaultChecked={isTaskCompleted}
-        onChange={handleCheckboxChange}
-      />
-      <label className="todo-label" role="text" htmlFor={taskId}>
-        {props.task.description}
-      </label>
-      <DeleteTask id={props.task.id} onTaskAdded={props.onTaskAdded} />
-    </div>
-  </li>
-
+    <li id="task-item" className={isCompleteClass} key={props.task.id}>
+      <div className="view">
+        <input
+          type="checkbox"
+          name={`input-${props.task.id}`}
+          id={`input-${props.task.id}`}
+          className="toggle"
+          ref={checkboxRef}
+          defaultChecked={props.task.isComplete}
+          onChange={handleCheckboxChange}
+        />
+        <label
+          className="todo-label"
+          role="text"
+          htmlFor={`input-${props.task.id}`}
+        >
+          {props.task.description}
+        </label>
+        <DeleteTask id={props.task.id} onTaskAdded={props.onTaskAdded} />
+      </div>
+    </li>
   )
 }
 export default TaskListItem

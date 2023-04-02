@@ -3,7 +3,7 @@ import {
   SET_TASK_SUCCESS,
   SET_ERROR,
   TaskAction,
-} from '../actions/task'
+} from '../actions/taskActions'
 import { Task } from '../../models/task'
 
 export interface TaskState {

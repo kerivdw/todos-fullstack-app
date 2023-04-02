@@ -21,13 +21,13 @@ exports.seed = async function (knex) {
     {
       description: 'Watch a bad movie',
       created_at: dateYesterday.toISOString(),
-      completed_at: null,
+      completed_at: dateYesterday.toISOString(),
       task_list_id: 1,
     },
     {
       description: 'Code a personal project',
       created_at: dateLastWeek.toISOString(),
-      completed_at: dateYesterday.toISOString(),
+      completed_at: null,
       task_list_id: 1,
     },
     {
