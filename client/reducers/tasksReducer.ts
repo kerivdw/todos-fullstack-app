@@ -48,7 +48,7 @@ const reducer = (state = initialState, action: TaskAction): TaskState => {
         data: [
           ...state.data.map((task) =>
             task.id === action.payload.id
-              ? { ...task, createdAt: action.payload.createdAt }
+              ? { ...task, completedAt: action.payload.completedAt, isComplete: action.payload.isComplete }
               : task
           ),
         ],
