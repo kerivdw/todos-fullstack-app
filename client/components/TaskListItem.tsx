@@ -2,11 +2,10 @@ import { useAppDispatch } from '../hooks'
 import { useRef, useState } from 'react'
 import { Task } from '../../models/task'
 import DeleteTask from './DeleteTask'
-import { updateTaskComplete } from '../actions/taskActions'
+import { updateTaskComplete } from '../actions/tasks'
 
 interface Props {
   task: Task
-  onTaskAdded: () => void
 }
 
 function TaskListItem(props: Props) {
@@ -22,14 +21,12 @@ function TaskListItem(props: Props) {
         setIsCompleteClass('completed')
         if (props.task.isComplete !== true) {
           dispatch(updateTaskComplete(props.task.id, true))
-          props.onTaskAdded()
         }
         break
       case false:
         setIsCompleteClass('')
         if (props.task.isComplete === true) {
           dispatch(updateTaskComplete(props.task.id, false))
-          props.onTaskAdded()
         }
         break
       default:
@@ -56,7 +53,7 @@ function TaskListItem(props: Props) {
         >
           {props.task.description}
         </label>
-        <DeleteTask id={props.task.id} onTaskAdded={props.onTaskAdded} />
+        <DeleteTask id={props.task.id} />
       </div>
     </li>
   )

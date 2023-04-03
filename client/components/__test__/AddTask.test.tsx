@@ -5,8 +5,8 @@ import nock from 'nock'
 import { MemoryRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
-import App from './App'
-import { initaliseStore } from '../store'
+import App from '../App'
+import { initaliseStore } from '../../store'
 
 describe('AddTask component', () => {
 

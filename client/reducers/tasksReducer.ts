@@ -1,9 +1,12 @@
 import {
   SET_TASK_PENDING,
-  SET_TASK_SUCCESS,
+  SET_TASKS_SUCCESS,
+  ADD_TASK_SUCCESS,
+  UPDATE_TASK_SUCCESS,
+  DELETE_TASK_SUCCESS,
   SET_ERROR,
   TaskAction,
-} from '../actions/taskActions'
+} from '../actions/tasks'
 import { Task } from '../../models/task'
 
 export interface TaskState {
@@ -26,11 +29,37 @@ const reducer = (state = initialState, action: TaskAction): TaskState => {
         error: undefined,
         data: [],
       }
-    case SET_TASK_SUCCESS:
+    case SET_TASKS_SUCCESS:
       return {
         loading: false,
         error: undefined,
         data: action.payload,
+      }
+    case ADD_TASK_SUCCESS:
+      return {
+        loading: false,
+        error: undefined,
+        data: [...state.data, action.payload],
+      }
+    case UPDATE_TASK_SUCCESS:
+      return {
+        loading: false,
+        error: undefined,
+        data: [
+          ...state.data.map((task) =>
+            task.id === action.payload.id
+              ? { ...task, createdAt: action.payload.createdAt }
+              : task
+          ),
+        ],
+      }
+    case DELETE_TASK_SUCCESS:
+      return {
+        loading: false,
+        error: undefined,
+        data: [
+          ...state.data.filter((task) => task.id !== Number(action.payload)),
+        ],
       }
     case SET_ERROR:
       return {

@@ -1,9 +1,8 @@
 import { useAppDispatch } from '../hooks'
-import { deleteTask } from '../actions/taskActions'
+import { removeTask } from '../actions/tasks'
 
 interface Props {
   id: number
-  onTaskAdded: () => void
 }
 
 function DeleteTask(props: Props) {
@@ -13,16 +12,12 @@ function DeleteTask(props: Props) {
   function handleClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     event.preventDefault()
     const id = event.currentTarget.id
-    const button = document.getElementById(id)
-    button?.classList.add('fade-out')
-    dispatch(deleteTask(id))
-    props.onTaskAdded()
+    dispatch(removeTask(id))
   }
 
   return (
-    <>
-      <button id={buttonId} className="destroy" onClick={handleClick}></button>
-    </>
+    <button id={buttonId} className="destroy" onClick={handleClick}></button>
   )
 }
+
 export default DeleteTask

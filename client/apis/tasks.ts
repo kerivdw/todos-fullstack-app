@@ -1,7 +1,5 @@
 import request from 'superagent'
-import { Task, NewTask, UpdatedTask } from '../../models/task'
-import { updateTask } from '../../server/db'
-import { ids } from 'webpack'
+import { Task, NewTask,} from '../../models/task'
 
 const rootUrl = '/api/v1/task'
 
@@ -23,7 +21,7 @@ export async function addTask(newTask: NewTask): Promise<Task> {
   return response.body.task
 }
 
-export async function deletesTask(taskId: string): Promise<number> {
+export async function deleteTask(taskId: string): Promise<number> {
   const response = await request.post(rootUrl + '/delete/' + taskId)
   return response.statusCode
 }
@@ -33,8 +31,8 @@ export async function completeTask(
   isComplete: boolean
 ): Promise<number> {
   const dateToday = isComplete ? new Date().toISOString() : null
-  const updatedTask :UpdatedTask = [{ id: taskId, completedAt: dateToday }]
+  const task = [{ id: taskId, completedAt: dateToday }]
 
-  const response = await request.post(rootUrl + '/update').send(updatedTask)
+  const response = await request.post(rootUrl + '/update').send(task)
   return response.statusCode
 }

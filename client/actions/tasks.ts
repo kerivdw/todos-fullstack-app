@@ -1,26 +1,20 @@
-import {
-  getTasks,
-  addTask,
-  deletesTask,
-  completeTask,
-  setfilterdTas,
-} from '../apis/tasks'
+import { getTasks, addTask, deleteTask, completeTask } from '../apis/tasks'
 import { Task, NewTask, UpdatedTask } from '../../models/task'
 import { Action, Dispatch } from 'redux'
 import { RootState, ThunkAction } from '../store'
 
 export const SET_TASK_PENDING = 'SET_TASK_PENDING'
-export const SET_TASK_SUCCESS = 'SET_TASK_SUCCESS'
-export const ADD_TASK_SUCCESS = 'ADD_TASK_SUCCESS'
+export const ADD_TASK_SUCCESS = 'SET_TASK_SUCCESS'
+export const SET_TASKS_SUCCESS = 'SET_TASKS_SUCCESS'
 export const UPDATE_TASK_SUCCESS = 'UPDATE_TASK_SUCCESS'
 export const DELETE_TASK_SUCCESS = 'DELETE_TASK_SUCCESS'
 export const SET_ERROR = 'SET_ERROR'
 
 export type TaskAction =
   | { type: typeof SET_TASK_PENDING; payload: null }
-  | { type: typeof SET_TASK_SUCCESS; payload: Task[] }
-  | { type: typeof ADD_TASK_SUCCESS; payload: NewTask }
-  | { type: typeof UPDATE_TASK_SUCCESS; payload: UpdatedTask }
+  | { type: typeof SET_TASKS_SUCCESS; payload: Task[] }
+  | { type: typeof ADD_TASK_SUCCESS; payload: Task }
+  | { type: typeof UPDATE_TASK_SUCCESS; payload: Task }
   | { type: typeof DELETE_TASK_SUCCESS; payload: string }
   | { type: typeof SET_ERROR; payload: string }
 
@@ -31,21 +25,21 @@ export function setTaskPending(): TaskAction {
   }
 }
 
-export function setTaskSuccess(tasks: Task[]): TaskAction {
+export function setTasksSuccess(tasks: Task[]): TaskAction {
   return {
-    type: SET_TASK_SUCCESS,
+    type: SET_TASKS_SUCCESS,
     payload: tasks,
   }
 }
 
-export function addTaskSuccess(newTask: NewTask): TaskAction {
+export function addTaskSuccess(task: Task): TaskAction {
   return {
     type: ADD_TASK_SUCCESS,
-    payload: newTask,
+    payload: task,
   }
 }
 
-export function updateTaskSuccess(updateTask: UpdatedTask): TaskAction {
+export function updateTaskSuccess(updateTask: Task): TaskAction {
   return {
     type: UPDATE_TASK_SUCCESS,
     payload: updateTask,
@@ -71,7 +65,7 @@ export function fetchTasks(): ThunkAction {
     dispatch(setTaskPending())
     return getTasks()
       .then((tasks) => {
-        dispatch(setTaskSuccess(tasks))
+        dispatch(setTasksSuccess(tasks))
       })
       .catch((err) => {
         dispatch(setError(err.errorMessage))
@@ -79,13 +73,11 @@ export function fetchTasks(): ThunkAction {
   }
 }
 
-
 export function addNewTask(newTask: NewTask): ThunkAction {
   return (dispatch: Dispatch) => {
-    dispatch(setTaskPending())
     return addTask(newTask)
-      .then(() => {
-        dispatch(addTaskSuccess(newTask))
+      .then((task) => {
+        dispatch(addTaskSuccess(task))
       })
       .catch((err) => {
         dispatch(setError(err.message))
@@ -93,10 +85,9 @@ export function addNewTask(newTask: NewTask): ThunkAction {
   }
 }
 
-export function deleteTask(taskId: string): ThunkAction {
+export function removeTask(taskId: string): ThunkAction {
   return (dispatch: Dispatch) => {
-    dispatch(setTaskPending())
-    return deletesTask(taskId)
+    return deleteTask(taskId)
       .then(() => {
         dispatch(deleteTaskSuccess(taskId))
       })
@@ -112,10 +103,14 @@ export function updateTaskComplete(
   isComplete: boolean
 ): ThunkAction {
   return (dispatch: Dispatch) => {
-    dispatch(setTaskPending())
     return completeTask(taskId, isComplete)
       .then(() => {
-        dispatch(updateTaskSuccess({ id: taskId, isComplete: isComplete }))
+        dispatch(updateTaskSuccess({
+          id: taskId, isComplete: isComplete,
+          description: '',
+          createdAt: '',
+          taskListId: 0
+        }))
       })
       .catch((err) => {
         console.log(err)

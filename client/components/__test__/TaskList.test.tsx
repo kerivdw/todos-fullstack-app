@@ -4,10 +4,10 @@ import nock from 'nock'
 
 import { MemoryRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { fetchTasks } from '../actions/taskActions'
+import { fetchTasks } from '../../actions/tasks'
 
-import App from './App'
-import { initaliseStore } from '../store'
+import App from '../App'
+import { initaliseStore } from '../../store'
 
 describe('thunk fetch task actions', () => {
   it('should show a list of tasks', async () => {

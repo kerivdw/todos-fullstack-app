@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useAppSelector, useAppDispatch } from '../hooks'
-import { fetchTasks } from '../actions/taskActions'
+import { fetchTasks } from '../actions/tasks'
 import AddTask from './AddTask'
 import Footer from './Footer'
 import TaskList from './TaskList'

@@ -1,14 +1,9 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
 import { useAppDispatch, useAppSelector } from '../hooks'
-import { addNewTask } from '../actions/taskActions'
+import { addNewTask } from '../actions/tasks'
 import { Task, NewTask } from '../../models/task'
 
-interface Props {
-  onTaskAdded: () => void
-}
-
-function AddTask(props: Props) {
-  const { loading, error, data } = useAppSelector((state) => state.tasks)
+function AddTask() {
   const [newDescription, setNewDescription] = useState('')
   const dispatch = useAppDispatch()
 
@@ -20,16 +15,15 @@ function AddTask(props: Props) {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
-    const task: NewTask = {
-      description: newDescription,
-      createdAt: new Date().toISOString(),
-      completedAt: null,
-      taskListId: 1,
-    }
-    console.log(task)
-    dispatch(addNewTask(task))
+    dispatch(
+      addNewTask({
+        description: newDescription,
+        createdAt: new Date().toISOString(),
+        completedAt: null,
+        taskListId: 1,
+      })
+    )
     setNewDescription('')
-    props.onTaskAdded()
   }
 
   return (
