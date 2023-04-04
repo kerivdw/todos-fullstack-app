@@ -49,7 +49,11 @@ const reducer = (state = initialState, action: TaskAction): TaskState => {
         data: [
           ...state.data.map((task) =>
             task.id === action.payload.id
-              ? { ...task, completedAt: action.payload.completedAt, isComplete: action.payload.isComplete }
+              ? {
+                  ...task,
+                  completedAt: action.payload.completedAt,
+                  isComplete: action.payload.isComplete,
+                }
               : task
           ),
         ],
@@ -66,11 +70,8 @@ const reducer = (state = initialState, action: TaskAction): TaskState => {
       return {
         loading: false,
         error: undefined,
-        data: [
-          ...state.data.map((task) =>
-            task.createdAt !== null),
-        ],
-      }
+        data: state.data.filter((task) => task.completedAt === null),
+      };
     case SET_ERROR:
       return {
         loading: false,

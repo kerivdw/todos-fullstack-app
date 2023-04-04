@@ -6,19 +6,16 @@ interface Props {
 }
 
 function Footer(props: Props) {
-  console.log(`props data`, props.data)
   const [activeTaskCount, setActiveTaskCount] = useState<string>('')
   const [completedTaskCount, setCompletedTaskCount] = useState<number>(0)
 
   useEffect(() => {
     const activeCount = props.data.filter((task) => !task.isComplete).length
-    console.log(`active`, activeCount)
     setActiveTaskCount(String(activeCount))
   }, [props.data])
 
   useEffect(() => {
     const completedCount = props.data.filter((task) => task.isComplete).length
-    console.log(`completed`, completedCount)
     setCompletedTaskCount(completedCount)
   }, [props.data])
 
