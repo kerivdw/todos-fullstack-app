@@ -1,7 +1,7 @@
 import { NewTask, Task, UpdatedTask } from '../../../models/task'
 
 const environment = 'test'
-const config = require('./knexfile')
+const config = require('../knexfile')
 const testConnection = require('knex')(config[environment])
 
 import { beforeEach } from 'node:test'
@@ -12,7 +12,7 @@ const {
   createTask,
   updateTask,
   deleteTask,
-} = require('./index')
+} = require('../index')
 
 beforeAll(async () => {
   await testConnection.migrate.latest()
