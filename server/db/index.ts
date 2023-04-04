@@ -56,5 +56,5 @@ export function deleteTask(id: number, db = connection): Promise<number> {
 
 
 export function deleteCompletedTasks(db = connection): Promise<number> {
-  return db('tasks').whereNotNull('completedAt').del()
+  return db('tasks').whereNotNull('completed_at').del()
 }
