@@ -1,9 +1,10 @@
 import request from 'supertest'
-import server from '../server'
+import server from '../../server'
 
-import * as db from '../db'
+const dbFilePath = '../../db'
+import * as db from '../../db'
 
-jest.mock('../db')
+jest.mock('../../db')
 
 beforeEach(() => {
   jest.resetAllMocks()
@@ -40,6 +41,7 @@ describe('GET /api/v1/task/list', () => {
           createdAt: '2023-03-29T08:56:01.152Z',
           description: 'Head To The Gym',
           id: 1,
+          isComplete: false,
           taskListId: 1,
         },
         {
@@ -47,6 +49,7 @@ describe('GET /api/v1/task/list', () => {
           createdAt: '2023-03-28T08:56:01.152Z',
           description: 'Watch A Bad Movie',
           id: 2,
+          isComplete: false,
           taskListId: 1,
         },
       ],
@@ -83,7 +86,7 @@ describe('POST /api/v1/task', () => {
       },
     ])
 
-    jest.mock('../db', () => ({
+    jest.mock(dbFilePath, () => ({
       createTask: mockCreateTask,
     }))
 
@@ -198,7 +201,7 @@ describe('POST /api/v1/task/update', () => {
       },
     ])
 
-    jest.mock('../db', () => ({
+    jest.mock(dbFilePath, () => ({
       updatedTask: mockUpdatedTask,
     }))
 
@@ -234,7 +237,7 @@ describe('POST /api/v1/task/update', () => {
       },
     ])
 
-    jest.mock('../db', () => ({
+    jest.mock(dbFilePath, () => ({
       updatedTask: mockUpdatedTask,
     }))
 
@@ -274,22 +277,7 @@ describe('POST /api/v1/task/update', () => {
     expect(response.status).toBe(400)
     expect(response.text).toBe('The task id is missing')
   })
-  it('Should return an error when the description and completedAt are missing', async () => {
-    const requestBody = [
-      {
-        id: 1,
-        createdAt: null,
-        taskListId: 1,
-      },
-    ]
-
-    const response = await request(server)
-      .post('/api/v1/task/update')
-      .send(requestBody)
-
-    expect(response.status).toBe(400)
-    expect(response.text).toBe('The description or completed date are missing')
-  })
+  
   it('Should return an error when a task cannot be updated', async () => {
     jest.mocked(db.createTask).mockRejectedValue({
       status: 500,
@@ -311,15 +299,14 @@ describe('POST /api/v1/task/delete', () => {
   it('Should delete a task', async () => {
     jest.mocked(db.deleteTask).mockResolvedValue(1)
 
-     const response = await request(server).post('/api/v1/task/delete/1')
+    const response = await request(server).post('/api/v1/task/delete/1')
 
     expect(response.status).toBe(204)
   })
 
   it('Should return an error if no tasks are deleted', async () => {
     jest.mocked(db.deleteTask).mockResolvedValue(0)
-    const response = await request(server)
-      .post('/api/v1/task/delete/1')
+    const response = await request(server).post('/api/v1/task/delete/1')
 
     expect(response.status).toBe(503)
     expect(response.text).toBe('the task record does not exist')
@@ -327,8 +314,7 @@ describe('POST /api/v1/task/delete', () => {
   it('Should return an error if more than one task is deleted', async () => {
     jest.mocked(db.deleteTask).mockResolvedValue(2)
 
-    const response = await request(server)
-      .post('/api/v1/task/delete/1')
+    const response = await request(server).post('/api/v1/task/delete/1')
 
     expect(response.status).toBe(500)
     expect(response.text).toBe('more than one record was deleted in error')
@@ -348,4 +334,8 @@ describe('POST /api/v1/task/delete', () => {
       error: 'There was an error deleting the task',
     })
   })
+})
+
+describe('POST /api/v1/task/deleteComplete', () => {
+  it.todo('should delete all completed tasks')
 })

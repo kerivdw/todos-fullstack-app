@@ -2,12 +2,14 @@ import { getTasks, addTask, deleteTask, completeTask } from '../apis/tasks'
 import { Task, NewTask, UpdatedTask } from '../../models/task'
 import { Action, Dispatch } from 'redux'
 import { RootState, ThunkAction } from '../store'
+import { deleteCompletedTasks } from '../../server/db'
 
 export const SET_TASK_PENDING = 'SET_TASK_PENDING'
 export const ADD_TASK_SUCCESS = 'SET_TASK_SUCCESS'
 export const SET_TASKS_SUCCESS = 'SET_TASKS_SUCCESS'
 export const UPDATE_TASK_SUCCESS = 'UPDATE_TASK_SUCCESS'
 export const DELETE_TASK_SUCCESS = 'DELETE_TASK_SUCCESS'
+export const DELETE_COMPLETED_TASK_SUCCESS = 'DELETE_COMPLETED_TASK_SUCCESS'
 export const SET_ERROR = 'SET_ERROR'
 
 export type TaskAction =
@@ -16,6 +18,7 @@ export type TaskAction =
   | { type: typeof ADD_TASK_SUCCESS; payload: Task }
   | { type: typeof UPDATE_TASK_SUCCESS; payload: Task }
   | { type: typeof DELETE_TASK_SUCCESS; payload: string }
+  | { type: typeof DELETE_COMPLETED_TASK_SUCCESS; payload: Task[] }
   | { type: typeof SET_ERROR; payload: string }
 
 export function setTaskPending(): TaskAction {
@@ -50,6 +53,13 @@ export function deleteTaskSuccess(taskId: string): TaskAction {
   return {
     type: DELETE_TASK_SUCCESS,
     payload: taskId,
+  }
+}
+
+export function deleteCompletedTaskSuccess(): TaskAction {
+  return {
+    type: DELETE_COMPLETED_TASK_SUCCESS,
+    payload: [],
   }
 }
 
@@ -98,6 +108,19 @@ export function removeTask(taskId: string): ThunkAction {
   }
 }
 
+export function removeAllCompletedTasks(): ThunkAction {
+  return (dispatch: Dispatch) => {
+    return deleteCompletedTasks()
+      .then(() => {
+        dispatch(deleteCompletedTaskSuccess())
+      })
+      .catch((err) => {
+        console.log(err)
+        dispatch(setError(err.message))
+      })
+  }
+}
+
 export function updateTaskComplete(
   taskId: number,
   isComplete: boolean
@@ -118,3 +141,5 @@ export function updateTaskComplete(
       })
   }
 }
+
+

@@ -4,6 +4,7 @@ import {
   ADD_TASK_SUCCESS,
   UPDATE_TASK_SUCCESS,
   DELETE_TASK_SUCCESS,
+  DELETE_COMPLETED_TASK_SUCCESS,
   SET_ERROR,
   TaskAction,
 } from '../actions/tasks'
@@ -59,6 +60,15 @@ const reducer = (state = initialState, action: TaskAction): TaskState => {
         error: undefined,
         data: [
           ...state.data.filter((task) => task.id !== Number(action.payload)),
+        ],
+      }
+    case DELETE_COMPLETED_TASK_SUCCESS:
+      return {
+        loading: false,
+        error: undefined,
+        data: [
+          ...state.data.map((task) =>
+            task.createdAt !== null),
         ],
       }
     case SET_ERROR:

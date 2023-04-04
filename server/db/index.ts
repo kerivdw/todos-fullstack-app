@@ -53,3 +53,8 @@ export function updateTask(
 export function deleteTask(id: number, db = connection): Promise<number> {
   return db('tasks').where({ id }).delete()
 }
+
+
+export function deleteCompletedTasks(db = connection): Promise<number> {
+  return db('tasks').whereNotNull('completedAt').del()
+}

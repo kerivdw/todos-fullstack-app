@@ -1,11 +1,11 @@
-import { NewTask, Task, UpdatedTask } from '../../models/task'
+import { NewTask, Task, UpdatedTask } from '../../../models/task'
 
 const environment = 'test'
 const config = require('./knexfile')
 const testConnection = require('knex')(config[environment])
 
 import { beforeEach } from 'node:test'
-import { getTaskListIdByUser } from '.'
+import { getTaskListIdByUser } from '..'
 
 const {
   getAllTasksByUser,
@@ -100,4 +100,6 @@ describe('Tasks', () => {
       expect(tasks).not.toContain(taskList[0].id)
     })
   })
+
+  it.todo('should delete all completed tasks')
 })

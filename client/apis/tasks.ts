@@ -26,6 +26,8 @@ export async function deleteTask(taskId: string): Promise<number> {
   return response.statusCode
 }
 
+
+
 export async function completeTask(
   taskId: number,
   isComplete: boolean
@@ -33,9 +35,16 @@ export async function completeTask(
   const dateToday = isComplete ? new Date().toISOString() : null
   const task = [{ id: taskId, completedAt: dateToday }]
 
-  await request.post(rootUrl + '/update').send(task).then((response) => {
-      const result =  response.statusCode === 200 ? {id: taskId, completedAt: dateToday, isComplete: true} : null
-      return result
-  })
+  const response = await request.post(rootUrl + '/update').send(task)
+  
+  if (response.statusCode !== 200) {
+    throw new Error(`task did not complete ${taskId}. The server returned status code ${response.statusCode}`)
+  }
 
+  return {id: taskId, completedAt: dateToday, isComplete: true}
+}
+
+export async function clearCompletedTasks() {
+  const response = await request.post(rootUrl + '/update')
+  return response.statusCode
 }

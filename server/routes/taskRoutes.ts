@@ -1,7 +1,13 @@
 import express from 'express'
 import { Task, NewTask, UpdatedTask } from '../../models/task'
 
-import { getAllTasksByUser, createTask, updateTask, deleteTask } from '../db'
+import {
+  getAllTasksByUser,
+  createTask,
+  updateTask,
+  deleteTask,
+  deleteCompletedTasks,
+} from '../db'
 
 const router = express.Router()
 
@@ -120,6 +126,22 @@ router.post('/delete/:id', async (req, res) => {
     }
     if (recordsUpdated > 1) {
       res.status(500).send('more than one record was deleted in error')
+    }
+  } catch (error) {
+    res.status(500).json({
+      error: 'There was an error deleting the task',
+    })
+  }
+})
+
+router.post('/deleteCompleted', async (req, res) => {
+  try {
+    const recordsUpdated = await deleteCompletedTasks()
+    if (recordsUpdated >= 1) {
+      res.sendStatus(204)
+    }
+    if (recordsUpdated === 0) {
+      res.status(503).send('there are no completed tasks')
     }
   } catch (error) {
     res.status(500).json({
