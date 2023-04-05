@@ -1,8 +1,7 @@
-import { getTasks, addTask, deleteTask, completeTask } from '../apis/tasks'
+import { getTasks, addTask, deleteTask, completeTask, clearCompletedTasks } from '../apis/tasks'
 import { Task, NewTask, UpdatedTask } from '../../models/task'
-import { Action, Dispatch } from 'redux'
-import { RootState, ThunkAction } from '../store'
-import { deleteCompletedTasks } from '../../server/db'
+import { Dispatch } from 'redux'
+import { ThunkAction } from '../store'
 
 export const SET_TASK_PENDING = 'SET_TASK_PENDING'
 export const ADD_TASK_SUCCESS = 'SET_TASK_SUCCESS'
@@ -110,7 +109,7 @@ export function removeTask(taskId: string): ThunkAction {
 
 export function removeAllCompletedTasks(): ThunkAction {
   return (dispatch: Dispatch) => {
-    return deleteCompletedTasks()
+    return clearCompletedTasks()
       .then(() => {
         dispatch(deleteCompletedTaskSuccess())
       })
