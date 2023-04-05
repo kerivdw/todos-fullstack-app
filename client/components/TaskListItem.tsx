@@ -55,6 +55,7 @@ function TaskListItem(props: Props) {
         </label>
         <DeleteTask id={props.task.id} />
       </div>
+      <input className="editing view" value="Rule the web" />
     </li>
   )
 }

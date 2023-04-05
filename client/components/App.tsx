@@ -13,6 +13,14 @@ function App() {
     dispatch(fetchTasks())
   }, [dispatch])
 
+  if (loading) {
+    return <p>Loading...</p>
+  }
+
+  if (error) {
+    return <p>There was an error</p>
+  }
+
   return (
     <>
       <header className="header">
@@ -24,7 +32,7 @@ function App() {
         <label htmlFor="toggle-all">Mark all as complete</label>
         <TaskList tasks={data} />
       </section>
-      <Footer data={data}/>
+      <Footer data={data} />
     </>
   )
 }
