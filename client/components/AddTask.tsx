@@ -1,7 +1,6 @@
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
+import { useState, ChangeEvent, FormEvent } from 'react'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { addNewTask } from '../actions/tasks'
-import { Task, NewTask } from '../../models/task'
 
 function AddTask() {
   const [newDescription, setNewDescription] = useState('')

@@ -1,5 +1,5 @@
 import request from 'superagent'
-import { Task, NewTask, UpdatedTask,} from '../../models/task'
+import { Task, NewTask, UpdatedTask } from '../../models/task'
 
 const rootUrl = '/api/v1/task'
 
@@ -26,8 +26,6 @@ export async function deleteTask(taskId: string): Promise<number> {
   return response.statusCode
 }
 
-
-
 export async function completeTask(
   taskId: number,
   isComplete: boolean
@@ -36,15 +34,17 @@ export async function completeTask(
   const task = [{ id: taskId, completedAt: dateToday }]
 
   const response = await request.post(rootUrl + '/update').send(task)
-  
+
   if (response.statusCode !== 200) {
-    throw new Error(`task did not complete ${taskId}. The server returned status code ${response.statusCode}`)
+    throw new Error(
+      `task did not complete ${taskId}. The server returned status code ${response.statusCode}`
+    )
   }
 
-  return {id: taskId, completedAt: dateToday, isComplete: true}
+  return { id: taskId, completedAt: dateToday, isComplete: true }
 }
 
 export async function clearCompletedTasks() {
-  const response = await request.post(rootUrl + '/update')
+  const response = await request.post(rootUrl + '/deleteCompleted')
   return response.statusCode
 }
