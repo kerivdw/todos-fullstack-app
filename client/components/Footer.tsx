@@ -30,11 +30,11 @@ function Footer(props: Props) {
 
   return (
     <footer className="footer">
-      <span className="todo-count">{activeTaskCount} active items</span>
+      <span className="todo-count">{activeTaskCount} items</span>
       <Filter />
       {completedTaskCount > 0 ? (
         <button className="clear-completed" onClick={handleCompleteAll}>
-          Clear completed
+          clear completed
         </button>
       ) : (
         ''

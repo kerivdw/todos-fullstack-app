@@ -12,6 +12,7 @@ function App() {
   useEffect(() => {
     dispatch(fetchTasks())
   }, [dispatch])
+  
 
   if (loading) {
     return <p>Loading...</p>
