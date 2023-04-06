@@ -1,7 +1,8 @@
 import { useEffect, useState, MouseEvent } from 'react'
-import { Task } from '../../models/task'
 import { useAppDispatch } from '../hooks'
+import { Task } from '../../models/task'
 import { removeAllCompletedTasks } from '../actions/tasks'
+import Filter from './Filter'
 
 interface Props {
   data: Task[]
@@ -29,18 +30,8 @@ function Footer(props: Props) {
 
   return (
     <footer className="footer">
-      <span className="todo-count">{activeTaskCount} items</span>
-      <ul className="filters">
-        <li>
-          <a href="#">All</a>
-        </li>
-        <li>
-          <a href="#">Active</a>
-        </li>
-        <li>
-          <a href="#">Completed</a>
-        </li>
-      </ul>
+      <span className="todo-count">{activeTaskCount} active items</span>
+      <Filter />
       {completedTaskCount > 0 ? (
         <button className="clear-completed" onClick={handleCompleteAll}>
           Clear completed
