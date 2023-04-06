@@ -16,7 +16,7 @@ module.exports = {
     client: 'sqlite3',
     useNullAsDefault: true,
     connection: {
-      filename: path.join(__dirname, 'test.sqlite3'),
+      filename: path.join(':memory:'),
     },
     migrations: {
       directory: path.join(__dirname, 'migrations'),
@@ -30,14 +30,10 @@ module.exports = {
   },
 
   production: {
-    client: 'postgresql',
-    connection: process.env.DATABASE_URL,
-    pool: {
-      min: 2,
-      max: 10,
+    client: 'sqlite3',
+    connection: {
+      filename: '/app/storage/prod.sqlite3',
     },
-    migrations: {
-      tableName: 'knex_migrations',
-    },
+    useNullAssDefault: true,
   },
 }
