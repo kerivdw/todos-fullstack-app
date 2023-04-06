@@ -277,7 +277,7 @@ describe('POST /api/v1/task/update', () => {
     expect(response.status).toBe(400)
     expect(response.text).toBe('The task id is missing')
   })
-  
+
   it('Should return an error when a task cannot be updated', async () => {
     jest.mocked(db.createTask).mockRejectedValue({
       status: 500,
@@ -334,8 +334,4 @@ describe('POST /api/v1/task/delete', () => {
       error: 'There was an error deleting the task',
     })
   })
-})
-
-describe('POST /api/v1/task/deleteComplete', () => {
-  it.todo('should delete all completed tasks')
 })

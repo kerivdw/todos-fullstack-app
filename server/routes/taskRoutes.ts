@@ -134,6 +134,7 @@ router.post('/delete/:id', async (req, res) => {
   }
 })
 
+//POST /api/v1/task/deleteCompleted
 router.post('/deleteCompleted', async (req, res) => {
   try {
     const recordsUpdated = await deleteCompletedTasks()

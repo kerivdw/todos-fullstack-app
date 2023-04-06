@@ -4,12 +4,11 @@ import nock from 'nock'
 
 import { MemoryRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { fetchTasks } from '../../actions/tasks'
 
 import App from '../App'
 import { initaliseStore } from '../../store'
 
-describe('thunk fetch task actions', () => {
+describe('<TaskList />', () => {
   it('should show a list of tasks', async () => {
     const scope = nock('http://localhost')
       .get('/api/v1/task/list')
@@ -46,6 +45,7 @@ describe('thunk fetch task actions', () => {
       expect(items).toHaveLength(2)
       expect(items[0]).toHaveTextContent('Head to the gym')
       expect(items[1]).toHaveTextContent('Watch a bad movie')
+      expect(scope.isDone()).toBeTruthy()
     })
   })
 })

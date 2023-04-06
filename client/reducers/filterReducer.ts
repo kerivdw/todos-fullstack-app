@@ -1,20 +1,23 @@
-import { FilterAction } from "../actions/filter";
+import { FilterAction } from '../actions/filter'
 
-const initialState = {
-  tasks: [],
-  filter: "all"
-};
+export interface FilterState {
+  filter: string
+}
 
-const filterReducer = (state = initialState, action : FilterAction) => {
+const initialState: FilterState = {
+  filter: 'all',
+}
+
+const filterReducer = (state = initialState, action: FilterAction) => {
   switch (action.type) {
-    case "SET_FILTER":
+    case 'SET_FILTER':
       return {
         ...state,
-        filter: action.payload
-      };
+        filter: action.payload,
+      }
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default filterReducer;
+export default filterReducer

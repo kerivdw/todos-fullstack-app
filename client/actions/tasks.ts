@@ -1,4 +1,10 @@
-import { getTasks, addTask, deleteTask, completeTask, clearCompletedTasks } from '../apis/tasks'
+import {
+  getTasks,
+  addTask,
+  deleteTask,
+  completeTask,
+  clearCompletedTasks,
+} from '../apis/tasks'
 import { Task, NewTask, UpdatedTask } from '../../models/task'
 import { Dispatch } from 'redux'
 import { ThunkAction } from '../store'
@@ -127,12 +133,15 @@ export function updateTaskComplete(
   return (dispatch: Dispatch) => {
     return completeTask(taskId, isComplete)
       .then(() => {
-        dispatch(updateTaskSuccess({
-          id: taskId, isComplete: isComplete,
-          description: '',
-          createdAt: '',
-          taskListId: 0
-        }))
+        dispatch(
+          updateTaskSuccess({
+            id: taskId,
+            isComplete: isComplete,
+            description: '',
+            createdAt: '',
+            taskListId: 0,
+          })
+        )
       })
       .catch((err) => {
         console.log(err)
@@ -140,5 +149,3 @@ export function updateTaskComplete(
       })
   }
 }
-
-

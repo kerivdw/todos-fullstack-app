@@ -16,7 +16,12 @@ function DeleteTask(props: Props) {
   }
 
   return (
-    <button id={buttonId} className="destroy" onClick={handleClick}></button>
+    <button
+      value="delete-button"
+      id={buttonId}
+      className="destroy"
+      onClick={handleClick}
+    ></button>
   )
 }
 

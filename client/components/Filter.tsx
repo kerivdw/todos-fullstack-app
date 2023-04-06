@@ -2,8 +2,9 @@ import { setFilter } from '../actions/filter'
 import { useAppSelector, useAppDispatch } from '../hooks'
 
 function Filter() {
-  const dispatch = useAppDispatch()
   const { filter } = useAppSelector((state) => state.filters)
+  const dispatch = useAppDispatch()
+
   const filterList = ['all', 'active', 'completed']
 
   const handleFilterClick = (value: string) => {
@@ -12,10 +13,10 @@ function Filter() {
 
   return (
     <ul className="filters">
-      {filterList.map((filterItem) => {
-        return (
-          <>
-            <li>
+      <>
+        {filterList.map((filterItem, index) => {
+          return (
+            <li key={index}>
               <button
                 type="button"
                 className={filter === filterItem ? 'selected' : ''}
@@ -24,9 +25,9 @@ function Filter() {
                 {filterItem}
               </button>
             </li>
-          </>
-        )
-      })}
+          )
+        })}
+      </>
     </ul>
   )
 }

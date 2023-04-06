@@ -236,6 +236,10 @@ body {
   transition: color 0.2s ease-out;
 }
 
+.hidden-text {
+  color: white;
+}
+
 .todo-list li .destroy:hover {
   color: #af5b5e;
 }
