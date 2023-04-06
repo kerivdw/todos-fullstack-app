@@ -32,8 +32,8 @@ module.exports = {
   production: {
     client: 'sqlite3',
     connection: {
-      filename: '/app/storage/prod.sqlite3',
+      filename: '/app/storage/dev.sqlite3',
     },
-    useNullAssDefault: true,
+    useNullAsDefault: true,
   },
 }

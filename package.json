@@ -98,7 +98,6 @@
     "knex": "^2.3.0",
     "nock": "^13.3.0",
     "pg": "^8.8.0",
-    "redux-mock-store": "^1.5.4",
     "sqlite3": "^5.1.2",
     "superagent": "^7.1.1"
   },
