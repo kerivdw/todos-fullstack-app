@@ -6,7 +6,7 @@
   "main": "server/index.ts",
   "scripts": {
     "build": "run-p build:client",
-    "build:client": "npm run webpack --mode production",
+    "build:client": "npm run webpack -- --mode production",
     "start": "ts-node server/index.ts",
     "test": "jest --watchAll",
     "test:watch": "jest --noStackTrace --watchAll",
