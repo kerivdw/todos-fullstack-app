@@ -28,12 +28,14 @@ export function createTask(
   newTask: NewTask,
   db = connection
 ): Promise<number[]> {
-  return db('tasks').insert({
-    description: newTask.description,
-    created_at: newTask.createdAt,
-    completed_at: newTask.completedAt,
-    task_list_id: newTask.taskListId,
-  })
+  return db('tasks')
+    .insert({
+      description: newTask.description,
+      created_at: newTask.createdAt,
+      completed_at: newTask.completedAt,
+      task_list_id: newTask.taskListId,
+    })
+    .returning(['id'])
 }
 
 export function updateTask(
@@ -53,7 +55,6 @@ export function updateTask(
 export function deleteTask(id: number, db = connection): Promise<number> {
   return db('tasks').where({ id }).delete()
 }
-
 
 export function deleteCompletedTasks(db = connection): Promise<number> {
   return db('tasks').whereNotNull('completed_at').del()
