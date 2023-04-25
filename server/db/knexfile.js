@@ -37,7 +37,7 @@ module.exports = {
       max: 10,
     },
     migrations: {
-      directory: path.join(__dirname, 'migrations'),
+      tableName: 'knex_migrations',
     },
   },
 }
