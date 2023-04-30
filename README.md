@@ -2,6 +2,8 @@
 
 For this challenge, we will build a todo app (which is a common way to practice a new technology), using the full stack! From the database to the server, the API client, React and Redux, this app will ask you to use everything you've learned.
 
+Deployed here https://web-production-52a7.up.railway.app/
+
 ## Setup
 
 ### 0. Cloning and installation
