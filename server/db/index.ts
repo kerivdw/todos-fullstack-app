@@ -24,10 +24,7 @@ export function getTaskListIdByUser(auth = 1, db = connection) {
   return db('task_list').where({ user_id: auth }).select('id')
 }
 
-export function createTask(
-  newTask: NewTask,
-  db = connection
-): Promise<number[]> {
+export function createTask(newTask: NewTask, db = connection): Promise<number[]> {
   return db('tasks')
     .insert({
       description: newTask.description,
@@ -35,7 +32,7 @@ export function createTask(
       completed_at: newTask.completedAt,
       task_list_id: newTask.taskListId,
     })
-    .returning('id')
+    .returning(['id'])
 }
 
 export function updateTask(

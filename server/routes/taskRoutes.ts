@@ -58,11 +58,11 @@ router.post('/', async (req, res) => {
       taskListId: taskListId,
     }
 
-    const [{ taskId }] = await createTask(newTask)
+    const [task] = await createTask(newTask)
 
     res.json({
       task: {
-        id: taskId,
+        id: task.id,
         description: newTask.description,
         createdAt: newTask.createdAt,
         completedAt: newTask.completedAt,
